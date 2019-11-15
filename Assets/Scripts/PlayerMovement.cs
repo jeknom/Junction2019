@@ -2,12 +2,13 @@
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] VariableJoystick joystick;
     [SerializeField] float movementSpeedModifier = .1f;
 
     void Update()
     {
-        var horizontalInput = Input.GetAxis("Horizontal");
-        var verticalInput = Input.GetAxis("Vertical");
+        var horizontalInput = joystick.Horizontal;
+        var verticalInput = joystick.Vertical;
 
         this.transform.position +=
             new Vector3(horizontalInput, verticalInput) * movementSpeedModifier;
