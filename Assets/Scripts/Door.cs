@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
+    [SerializeField] bool useDestroyDelay = false;
     [SerializeField] float destroyDuration = 1f;
     GameManager gameManager;
 
@@ -29,9 +30,13 @@ public class Door : MonoBehaviour
             collision.gameObject.name == "Player" &&
             gameManager.StateOfPlayer == PlayerState.YOUNG;
 
-        if (shouldDestroyDoor)
+        if (shouldDestroyDoor && this.useDestroyDelay)
         {
             this.StartCoroutine(DestroyDoorRoutine());
+        }
+        else if (shouldDestroyDoor)
+        {
+            Destroy(this.gameObject);
         }
     }
 

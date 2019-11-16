@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public enum PlayerState
@@ -12,6 +10,12 @@ public enum PlayerState
 public class GameManager : GenericSingletonClass<GameManager> {
     // Here create all the states that are going to be handled once like young/old 
     PlayerState stateOfPlayer = PlayerState.OLD;
+
+#if UNITY_ANDROID
+    ScreenOrientation previousOrientation;
+    ScreenOrientation youngOrientation;
+    ScreenOrientation oldOrientation;
+#endif
 
     public PlayerState StateOfPlayer {
         get {
@@ -33,19 +37,6 @@ public class GameManager : GenericSingletonClass<GameManager> {
         }
     }
 
-    private bool flip;
-    public bool Flip {
-        get {
-            return this.flip;
-        }
-        set {
-            this.flip = value;
-        }
-    }
-
-    private DeviceOrientation oldOrientation { get; set; }
-    private DeviceOrientation youngOrientation { get; set; }
-
     private MainSceneManager mainSceneManager;
     public MainSceneManager varMainSceneManager {
         get {
@@ -56,62 +47,53 @@ public class GameManager : GenericSingletonClass<GameManager> {
         }
     }
 
+#if UNITY_ANDROID
+    private void Start()
+    {
+        var currentOrientation = Screen.orientation;
 
-    void Start() {
-
-        oldOrientation = Input.deviceOrientation;
-        if(oldOrientation == DeviceOrientation.LandscapeLeft) {
-
-            youngOrientation = DeviceOrientation.LandscapeRight;
-
-        }
-        else if(oldOrientation == DeviceOrientation.LandscapeRight) {
-
-            youngOrientation = DeviceOrientation.LandscapeLeft;
-
-        }
-
+        this.oldOrientation = currentOrientation;
+        this.youngOrientation =
+            currentOrientation == ScreenOrientation.LandscapeLeft
+                ? ScreenOrientation.LandscapeRight
+                : ScreenOrientation.LandscapeLeft;
     }
+#endif
 
     void Update() {
-        DeviceOrientation tempOrientation  = Input.deviceOrientation;
+#if UNITY_ANDROID
+        var currentOrientation = Screen.orientation;
 
-        if(tempOrientation.Equals(youngOrientation) && this.stateOfPlayer != PlayerState.YOUNG) {
+        if (previousOrientation != currentOrientation)
+        {
+            this.SetPlayerAgeWithOrientation(currentOrientation);
+        }
+#endif
 
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            this.stateOfPlayer = this.stateOfPlayer == PlayerState.OLD
+                ? PlayerState.YOUNG
+                : PlayerState.OLD;
+        }
+#endif
+    }
+
+
+
+    void SetPlayerAgeWithOrientation(ScreenOrientation deviceOrientation)
+    {
+        if (deviceOrientation == this.youngOrientation)
+        {
             this.stateOfPlayer = PlayerState.YOUNG;
-
         }
-        else if(tempOrientation.Equals(oldOrientation) && this.stateOfPlayer != PlayerState.OLD) {
-
+        else if (deviceOrientation == this.oldOrientation)
+        {
             this.stateOfPlayer = PlayerState.OLD;
-
         }
 
-        Debug.Log(this.stateOfPlayer);
-
-        if(!varMainSceneManager) {
-
-            varMainSceneManager = (MainSceneManager)GameObject.FindObjectOfType<MainSceneManager>();
-
-        }
-        else {
-
-            if(varMainSceneManager.canStart && !timerStarted) {
-
-                if(flip) {
-                    stateOfPlayer = PlayerState.YOUNG;
-                    varMainSceneManager.multiplier = 1f;
-                    TimerStarted = true;
-                }
-                else if(!flip) {
-                    stateOfPlayer = PlayerState.OLD;
-                    varMainSceneManager.multiplier = 0.5f;
-                    TimerStarted = true;
-                }
-            }
-        }
-
-
+        this.previousOrientation = deviceOrientation;
     }
 
     // Generic scene management

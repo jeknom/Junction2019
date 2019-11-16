@@ -2,12 +2,8 @@
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] GameManager gameManager;
     [SerializeField] VariableJoystick joystick;
-
-    [Header("Movement speed")]
-    [SerializeField] float oldManMovementSpeed = .1f;
-    [SerializeField] float youngManMovementSpeed = .3f;
+    [SerializeField] float movementSpeedModifier = 0.1f;
 
     Rigidbody2D rigidbody2d;
 
@@ -18,33 +14,13 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        this.CheatToggleCharacterAge();
-
         var horizontalInput = joystick.Horizontal;
         var verticalInput = joystick.Vertical;
-        var movementSpeedModifier =
-            this.gameManager.StateOfPlayer == PlayerState.YOUNG
-                ? this.youngManMovementSpeed
-                : this.oldManMovementSpeed;
+
         var nextPosition =
             this.transform.position +
-            new Vector3(horizontalInput, verticalInput) * movementSpeedModifier;
+            (new Vector3(horizontalInput, verticalInput) * movementSpeedModifier);
 
         this.rigidbody2d.MovePosition(nextPosition);
-    }
-
-    void CheatToggleCharacterAge()
-    {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            if (this.gameManager.StateOfPlayer == PlayerState.YOUNG)
-            {
-                this.gameManager.StateOfPlayer = PlayerState.OLD;
-            }
-            else
-            {
-                this.gameManager.StateOfPlayer = PlayerState.YOUNG;
-            }
-        }
     }
 }
