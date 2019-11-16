@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-public class GameManager : GenericSingletonClass<GameManager> {
 
 public enum PlayerState
 {
@@ -10,7 +9,7 @@ public enum PlayerState
     OLD
 }
 
-public class GameManager :GenericSingletonClass<GameManager> {
+public class GameManager : GenericSingletonClass<GameManager> {
     // Here create all the states that are going to be handled once like young/old 
     PlayerState stateOfPlayer;
 
@@ -68,12 +67,12 @@ public class GameManager :GenericSingletonClass<GameManager> {
             if(varMainSceneManager.canStart && !timerStarted) {
                 if(flip) {
 
-                    stateOfPlayer = "young";
+                    stateOfPlayer = PlayerState.YOUNG;
                     TimerStarted = true;
                 }
                 else if(!flip) {
 
-                    stateOfPlayer = "old";
+                    stateOfPlayer = PlayerState.OLD;
                     TimerStarted = true;
                 }
             }
