@@ -22,12 +22,71 @@ public class GameManager : GenericSingletonClass<GameManager> {
         }
     }
 
+
+    private bool timerStarted;
+    public bool TimerStarted {
+        get {
+            return this.timerStarted;
+        }
+        set {
+            this.timerStarted = value;
+        }
+    }
+
+    private bool flip;
+    public bool Flip {
+        get {
+            return this.flip;
+        }
+        set {
+            this.flip = value;
+        }
+    }
+
+    private DeviceOrientation oldOrientation { get; set; }
+    private DeviceOrientation youngOrientation { get; set; }
+
+    private MainSceneManager mainSceneManager;
+    public MainSceneManager varMainSceneManager {
+        get {
+            return this.mainSceneManager;
+        }
+        set {
+            this.mainSceneManager = value;
+        }
+    }
+
+
     void Start() {
+
+        oldOrientation = Input.deviceOrientation;
+        if(oldOrientation == DeviceOrientation.LandscapeLeft) {
+
+            youngOrientation = DeviceOrientation.LandscapeRight;
+
+        }
+        else if(oldOrientation == DeviceOrientation.LandscapeRight) {
+
+            youngOrientation = DeviceOrientation.LandscapeLeft;
+
+        }
 
     }
 
     void Update() {
-        
+
+        DeviceOrientation tempOrientation  = Input.deviceOrientation;
+
+        if(tempOrientation == youngOrientation && this.stateOfPlayer != PlayerState.YOUNG) {
+
+            this.stateOfPlayer = PlayerState.YOUNG;
+
+        }
+        else if(tempOrientation == oldOrientation && this.stateOfPlayer != PlayerState.OLD) {
+
+            this.stateOfPlayer = PlayerState.OLD;
+
+        }
 
         if(!varMainSceneManager) {
 

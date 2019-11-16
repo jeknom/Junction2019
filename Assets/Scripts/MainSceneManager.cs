@@ -39,7 +39,7 @@ public class MainSceneManager : MonoBehaviour {
         }
         else {
 
-            GameManager.Instance.Flip = !GameManager.Instance.Flip;
+            //GameManager.Instance.Flip = !GameManager.Instance.Flip;
             GameManager.Instance.TimerStarted = false;
 
             timeRemaining = timeLimit;
