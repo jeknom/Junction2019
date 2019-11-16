@@ -77,16 +77,18 @@ public class GameManager : GenericSingletonClass<GameManager> {
 
         DeviceOrientation tempOrientation  = Input.deviceOrientation;
 
-        if(tempOrientation == youngOrientation && this.stateOfPlayer != PlayerState.YOUNG) {
+        if(tempOrientation.Equals(youngOrientation) && this.stateOfPlayer != PlayerState.YOUNG) {
 
             this.stateOfPlayer = PlayerState.YOUNG;
 
         }
-        else if(tempOrientation == oldOrientation && this.stateOfPlayer != PlayerState.OLD) {
+        else if(tempOrientation.Equals(oldOrientation) && this.stateOfPlayer != PlayerState.OLD) {
 
             this.stateOfPlayer = PlayerState.OLD;
 
         }
+
+        Debug.Log(this.stateOfPlayer);
 
         if(!varMainSceneManager) {
 

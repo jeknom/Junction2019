@@ -8,12 +8,14 @@ public class MainSceneManager : MonoBehaviour {
     public float timeRemaining;
 
     public Text timerText;
+    public Slider hourGlassSldr;
+
     public bool canStart = false;
     public float multiplier;
     // Start is called before the first frame update
     void Start()
     {
-        timeRemaining = timeLimit;
+        timeRemaining = 0;
         canStart = true;
         
     }
@@ -31,10 +33,10 @@ public class MainSceneManager : MonoBehaviour {
 
     public void StartCountDownTimer() {
 
-        if(timeRemaining > 0) {
+        if(timeRemaining < timeLimit) {
 
-            timeRemaining -= (Time.deltaTime * multiplier);
-            timerText.text = "Time: " + timeRemaining;
+            timeRemaining += (Time.deltaTime * multiplier);
+            timerText.text = "Time: " + timeRemaining + " : " + GameManager.Instance.StateOfPlayer;
 
         }
         else {
