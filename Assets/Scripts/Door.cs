@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Door : MonoBehaviour
 {
+    [SerializeField] float destroyDuration = 1f;
     GameManager gameManager;
 
-    private void OnEnable()
+    void OnEnable()
     {
         this.gameManager = GameObject
             .Find("GameManager")
@@ -16,6 +18,11 @@ public class Door : MonoBehaviour
         }
     }
 
+    void OnDestroy()
+    {
+        this.StopAllCoroutines();
+    }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         var shouldDestroyDoor =
@@ -24,7 +31,13 @@ public class Door : MonoBehaviour
 
         if (shouldDestroyDoor)
         {
-            Destroy(this.gameObject);
+            this.StartCoroutine(DestroyDoorRoutine());
         }
+    }
+
+    IEnumerator DestroyDoorRoutine()
+    {
+        yield return new WaitForSeconds(this.destroyDuration);
+        Destroy(this.gameObject);
     }
 }

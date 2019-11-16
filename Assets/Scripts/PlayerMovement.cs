@@ -18,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        this.CheatToggleCharacterAge();
+
         var horizontalInput = joystick.Horizontal;
         var verticalInput = joystick.Vertical;
         var movementSpeedModifier =
@@ -29,5 +31,17 @@ public class PlayerMovement : MonoBehaviour
             new Vector3(horizontalInput, verticalInput) * movementSpeedModifier;
 
         this.rigidbody2d.MovePosition(nextPosition);
+    }
+
+    void CheatToggleCharacterAge()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            var currentState = this.gameManager.StateOfPlayer;
+
+            this.gameManager.StateOfPlayer = currentState == PlayerState.YOUNG
+                ? PlayerState.OLD
+                : PlayerState.YOUNG;
+        }
     }
 }
