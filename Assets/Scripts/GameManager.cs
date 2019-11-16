@@ -9,8 +9,7 @@ public enum PlayerState
 }
 
 public class GameManager :GenericSingletonClass<GameManager> {
-    [SerializeField] Text triesRemainingText;
-    [SerializeField] private int triesRemaining = 3;
+    public int triesRemaining = 3;
     // Here create all the states that are going to be handled once like young/old 
     PlayerState stateOfPlayer = PlayerState.OLD;
 
@@ -86,9 +85,6 @@ public class GameManager :GenericSingletonClass<GameManager> {
 
 
     void Update() {
-        this.triesRemainingText.text =
-            "Rotates remaining: " + this.triesRemaining.ToString();
-
         if (this.triesRemaining <= 0)
         {
             return;

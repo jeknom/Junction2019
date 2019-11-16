@@ -604,6 +604,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2eacea486774ac4f92167d3ed8bde79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triesRemainingText: {fileID: 1912718649}
   timerText: {fileID: 1840581485}
   hourGlassSldr: {fileID: 1017257506}
   canStart: 0

@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 
 public class MainSceneManager : MonoBehaviour {
+    [SerializeField] Text triesRemainingText;
     public Text timerText;
     public Slider hourGlassSldr;
     public bool canStart = false;
@@ -14,7 +15,10 @@ public class MainSceneManager : MonoBehaviour {
 
     void Update()
     {
-        if(canStart) {
+        this.triesRemainingText.text =
+            "Rotates remaining: " + GameManager.Instance.triesRemaining.ToString();
+
+        if (canStart) {
             if(GameManager.Instance.TimerStarted && GameManager.Instance.TimeRemaining > 0) {
                 StartCountDownTimer();
             }
