@@ -1,18 +1,30 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    GameManager gameManager;
+
+    private void OnEnable()
     {
-        
+        this.gameManager = GameObject
+            .Find("GameManager")
+            .GetComponent<GameManager>();
+
+        if (gameManager == null)
+        {
+            Debug.LogError("The scene is missing the GameManager GameObject!!");
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        
+        var shouldDestroyDoor =
+            collision.gameObject.name == "Player" &&
+            gameManager.StateOfPlayer == PlayerState.YOUNG;
+
+        if (shouldDestroyDoor)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
