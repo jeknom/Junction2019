@@ -3,14 +3,28 @@
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] VariableJoystick joystick;
-    [SerializeField] float movementSpeedModifier = .1f;
+    [SerializeField] GameManager gameManager;
+    [SerializeField] float oldManMovementSpeed = .1f;
+    [SerializeField] float youngManMovementSpeed = .3f;
+    Rigidbody2D rigidbody2d;
+
+    private void OnEnable()
+    {
+        this.rigidbody2d = this.GetComponent<Rigidbody2D>();
+    }
 
     void Update()
     {
         var horizontalInput = joystick.Horizontal;
         var verticalInput = joystick.Vertical;
-
-        this.transform.position +=
+        var movementSpeedModifier =
+            this.gameManager.StateOfPlayer == PlayerState.YOUNG
+                ? this.youngManMovementSpeed
+                : this.oldManMovementSpeed;
+        var nextPosition =
+            this.transform.position +
             new Vector3(horizontalInput, verticalInput) * movementSpeedModifier;
+
+        this.rigidbody2d.MovePosition(nextPosition);
     }
 }
