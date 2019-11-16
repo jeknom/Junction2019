@@ -2,10 +2,13 @@
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] VariableJoystick joystick;
     [SerializeField] GameManager gameManager;
+    [SerializeField] VariableJoystick joystick;
+
+    [Header("Movement speed")]
     [SerializeField] float oldManMovementSpeed = .1f;
     [SerializeField] float youngManMovementSpeed = .3f;
+
     Rigidbody2D rigidbody2d;
 
     private void OnEnable()
