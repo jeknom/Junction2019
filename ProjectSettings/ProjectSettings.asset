@@ -642,7 +642,17 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLWasmStreaming: 0
   scriptingDefineSymbols:
-    4: 
+    1: UNNYNET
+    4: UNNYNET
+    7: UNNYNET
+    13: UNNYNET
+    14: UNNYNET
+    19: UNNYNET
+    21: UNNYNET
+    25: UNNYNET
+    27: UNNYNET
+    28: UNNYNET
+    29: UNNYNET
   platformArchitecture: {}
   scriptingBackend: {}
   il2cppCompilerConfiguration: {}

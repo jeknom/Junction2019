@@ -14,8 +14,8 @@ public class MainSceneManager : MonoBehaviour {
 
     void Start()
     {
-        GameManager.Instance.triesRemaining = this.tries;
-        GameManager.Instance.TimeRemaining = this.time;
+        //GameManager.Instance.triesRemaining = this.tries;
+        //GameManager.Instance.TimeRemaining = this.time;
         canStart = true;
     }
 
@@ -24,6 +24,7 @@ public class MainSceneManager : MonoBehaviour {
         if (GameManager.Instance.triesRemaining <= 0 ||
             GameManager.Instance.TimeRemaining <= 0)
         {
+            GameManager.Instance.reset();
             GameManager.Instance.GoToScene("GameOver");
         }
 

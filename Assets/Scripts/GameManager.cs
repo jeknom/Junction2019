@@ -62,10 +62,13 @@ public class GameManager :GenericSingletonClass<GameManager> {
             this.mainSceneManager = value;
         }
     }
-    private void OnEnable()
+    public void reset()
     {
         prevTimeRemaining = 0;
-        timeRemaining = 0;   
+        timeRemaining = timeLimit;
+        this.stateOfPlayer = PlayerState.OLD;
+        timerStarted = false;
+        triesRemaining = 3;
     }
 
     private void Start()
