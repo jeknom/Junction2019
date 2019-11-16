@@ -7,7 +7,7 @@ public enum PlayerState
     OLD
 }
 
-public class GameManager : GenericSingletonClass<GameManager> {
+public class GameManager :GenericSingletonClass<GameManager> {
     // Here create all the states that are going to be handled once like young/old 
     PlayerState stateOfPlayer = PlayerState.OLD;
 
@@ -37,6 +37,23 @@ public class GameManager : GenericSingletonClass<GameManager> {
         }
     }
 
+    private float timeRemaining;
+    public float TimeRemaining {
+        get {
+            return this.timeRemaining;
+        }
+        set {
+            this.timeRemaining = value;
+        }
+    }
+
+    public float prevTimeRemaining { get; set; }
+
+    [SerializeField]
+    private int triesRemaining = 3;
+
+    public float timeLimit = 50f;
+
     private MainSceneManager mainSceneManager;
     public MainSceneManager varMainSceneManager {
         get {
@@ -47,9 +64,14 @@ public class GameManager : GenericSingletonClass<GameManager> {
         }
     }
 
-#if UNITY_ANDROID
+
     private void Start()
     {
+        prevTimeRemaining = 0;
+        timeRemaining = 0;
+
+#if UNITY_ANDROID
+
         var currentOrientation = Screen.orientation;
 
         this.oldOrientation = currentOrientation;
@@ -57,10 +79,14 @@ public class GameManager : GenericSingletonClass<GameManager> {
             currentOrientation == ScreenOrientation.LandscapeLeft
                 ? ScreenOrientation.LandscapeRight
                 : ScreenOrientation.LandscapeLeft;
-    }
 #endif
 
+
+    }
+
+
     void Update() {
+
 #if UNITY_ANDROID
         var currentOrientation = Screen.orientation;
 
@@ -76,10 +102,24 @@ public class GameManager : GenericSingletonClass<GameManager> {
             this.stateOfPlayer = this.stateOfPlayer == PlayerState.OLD
                 ? PlayerState.YOUNG
                 : PlayerState.OLD;
+            timerStarted = false;
         }
 #endif
-    }
 
+        Debug.Log(this.stateOfPlayer);
+
+        if(!varMainSceneManager) {
+
+            varMainSceneManager = (MainSceneManager)GameObject.FindObjectOfType<MainSceneManager>();
+
+        }
+        else {
+
+            TimerHandler();
+
+        }
+
+    }
 
 
     void SetPlayerAgeWithOrientation(ScreenOrientation deviceOrientation)
@@ -91,9 +131,33 @@ public class GameManager : GenericSingletonClass<GameManager> {
         else if (deviceOrientation == this.oldOrientation)
         {
             this.stateOfPlayer = PlayerState.OLD;
+
         }
 
         this.previousOrientation = deviceOrientation;
+
+    }
+
+
+    private void TimerHandler() {
+
+        if(varMainSceneManager.canStart && !timerStarted) {
+
+            if(stateOfPlayer == PlayerState.OLD) {
+          
+                timeRemaining = timeLimit - prevTimeRemaining;
+                varMainSceneManager.multiplier = 0.5f;
+                timerStarted = true;
+
+            }
+            if(stateOfPlayer == PlayerState.YOUNG) {
+                
+                timeRemaining = timeLimit - prevTimeRemaining;
+                varMainSceneManager.multiplier = 1f;
+                timerStarted = true;
+
+            }
+        }
     }
 
     // Generic scene management

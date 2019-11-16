@@ -6,8 +6,7 @@ public class MainSceneManager : MonoBehaviour {
 
     [SerializeField] Text debugText;
 
-    public float timeLimit = 100f;
-    public float timeRemaining;
+   
 
     public Text timerText;
     public Slider hourGlassSldr;
@@ -17,7 +16,7 @@ public class MainSceneManager : MonoBehaviour {
     // Start is called before the first frame update
     void Start()
     {
-        timeRemaining = 0;
+       
         canStart = true;
         
     }
@@ -25,30 +24,27 @@ public class MainSceneManager : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        this.debugText.text = GameManager.Instance.StateOfPlayer.ToString();
-        if(GameManager.Instance.TimerStarted) {
+        if(canStart) {
+            this.debugText.text = GameManager.Instance.StateOfPlayer.ToString();
 
-            StartCountDownTimer();
+            if(GameManager.Instance.TimerStarted && GameManager.Instance.TimeRemaining > 0) {
 
+                StartCountDownTimer();
+
+            }
         }
     }
 
 
     public void StartCountDownTimer() {
 
-        if(timeRemaining < timeLimit) {
+        float tempTimeRemaining = GameManager.Instance.TimeRemaining;
+        tempTimeRemaining -= (Time.deltaTime * multiplier);
+        timerText.text = "Time: " + tempTimeRemaining + " : " + GameManager.Instance.StateOfPlayer;
+        hourGlassSldr.value = tempTimeRemaining;
 
-            timeRemaining += (Time.deltaTime * multiplier);
-            timerText.text = "Time: " + timeRemaining + " : " + GameManager.Instance.StateOfPlayer;
-
-        }
-        else {
-
-            //GameManager.Instance.Flip = !GameManager.Instance.Flip;
-            GameManager.Instance.TimerStarted = false;
-
-            timeRemaining = timeLimit;
-        }
+        GameManager.Instance.TimeRemaining = tempTimeRemaining;
+        GameManager.Instance.prevTimeRemaining = tempTimeRemaining;
 
     }
 
