@@ -7,7 +7,9 @@ public class Finish : MonoBehaviour
     {
         if (collision.gameObject.name == "Player")
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            SceneManager.LoadScene(
+                SceneManager.GetActiveScene().buildIndex + 1,
+                LoadSceneMode.Single);
         }    
     }
 }
