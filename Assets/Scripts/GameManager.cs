@@ -28,6 +28,32 @@ public class GameManager : GenericSingletonClass<GameManager> {
 
     void Update() {
         
+
+        if(!varMainSceneManager) {
+
+            varMainSceneManager = (MainSceneManager)GameObject.FindObjectOfType<MainSceneManager>();
+
+        }
+        else {
+
+            if(varMainSceneManager.canStart && !timerStarted) {
+
+                if(flip) {
+
+                    stateOfPlayer = PlayerState.YOUNG;
+                    varMainSceneManager.multiplier = 1f;
+                    TimerStarted = true;
+                }
+                else if(!flip) {
+
+                    stateOfPlayer = PlayerState.OLD;
+                    varMainSceneManager.multiplier = 0.5f;
+                    TimerStarted = true;
+                }
+            }
+        }
+
+
     }
 
     // Generic scene management
