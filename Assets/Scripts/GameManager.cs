@@ -86,6 +86,10 @@ public class GameManager :GenericSingletonClass<GameManager> {
 
 
     void Update() {
+        if (this.triesRemaining <= 0)
+        {
+            return;
+        }
 
 #if UNITY_ANDROID
         var currentOrientation = Screen.orientation;
@@ -93,6 +97,8 @@ public class GameManager :GenericSingletonClass<GameManager> {
         if (previousOrientation != currentOrientation)
         {
             this.SetPlayerAgeWithOrientation(currentOrientation);
+            timerStarted = false;
+            this.triesRemaining--;
         }
 #endif
 
@@ -103,6 +109,7 @@ public class GameManager :GenericSingletonClass<GameManager> {
                 ? PlayerState.YOUNG
                 : PlayerState.OLD;
             timerStarted = false;
+            this.triesRemaining--;
         }
 #endif
 
