@@ -37,11 +37,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.K))
         {
-            var currentState = this.gameManager.StateOfPlayer;
-
-            this.gameManager.StateOfPlayer = currentState == PlayerState.YOUNG
-                ? PlayerState.OLD
-                : PlayerState.YOUNG;
+            if (this.gameManager.StateOfPlayer == PlayerState.YOUNG)
+            {
+                this.gameManager.StateOfPlayer = PlayerState.OLD;
+            }
+            else
+            {
+                this.gameManager.StateOfPlayer = PlayerState.YOUNG;
+            }
         }
     }
 }

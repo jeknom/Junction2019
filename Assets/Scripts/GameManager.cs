@@ -11,7 +11,7 @@ public enum PlayerState
 
 public class GameManager : GenericSingletonClass<GameManager> {
     // Here create all the states that are going to be handled once like young/old 
-    PlayerState stateOfPlayer;
+    PlayerState stateOfPlayer = PlayerState.OLD;
 
     public PlayerState StateOfPlayer {
         get {
@@ -74,7 +74,6 @@ public class GameManager : GenericSingletonClass<GameManager> {
     }
 
     void Update() {
-
         DeviceOrientation tempOrientation  = Input.deviceOrientation;
 
         if(tempOrientation == youngOrientation && this.stateOfPlayer != PlayerState.YOUNG) {
@@ -98,13 +97,11 @@ public class GameManager : GenericSingletonClass<GameManager> {
             if(varMainSceneManager.canStart && !timerStarted) {
 
                 if(flip) {
-
                     stateOfPlayer = PlayerState.YOUNG;
                     varMainSceneManager.multiplier = 1f;
                     TimerStarted = true;
                 }
                 else if(!flip) {
-
                     stateOfPlayer = PlayerState.OLD;
                     varMainSceneManager.multiplier = 0.5f;
                     TimerStarted = true;

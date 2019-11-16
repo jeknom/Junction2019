@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 public class MainSceneManager : MonoBehaviour {
 
+    [SerializeField] Text debugText;
+
     public float timeLimit = 100f;
     public float timeRemaining;
 
@@ -21,6 +23,7 @@ public class MainSceneManager : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        this.debugText.text = GameManager.Instance.StateOfPlayer.ToString();
         if(GameManager.Instance.TimerStarted) {
 
             StartCountDownTimer();
