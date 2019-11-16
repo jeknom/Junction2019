@@ -39,7 +39,7 @@ public class GameManager :GenericSingletonClass<GameManager> {
         }
     }
 
-    private float timeRemaining;
+    private float timeRemaining = 10;
     public float TimeRemaining {
         get {
             return this.timeRemaining;
@@ -62,13 +62,14 @@ public class GameManager :GenericSingletonClass<GameManager> {
             this.mainSceneManager = value;
         }
     }
-
+    private void OnEnable()
+    {
+        prevTimeRemaining = 0;
+        timeRemaining = 0;   
+    }
 
     private void Start()
     {
-        prevTimeRemaining = 0;
-        timeRemaining = 0;
-
 #if UNITY_ANDROID
 
         var currentOrientation = Screen.orientation;
@@ -85,12 +86,6 @@ public class GameManager :GenericSingletonClass<GameManager> {
 
 
     void Update() {
-        if (this.triesRemaining <= 0)
-        {
-            return;
-        }
-
-
 #if UNITY_ANDROID
         var currentOrientation = Screen.orientation;
 
@@ -147,7 +142,6 @@ public class GameManager :GenericSingletonClass<GameManager> {
 
 
     private void TimerHandler() {
-
         if(varMainSceneManager.canStart && !timerStarted) {
 
             if(stateOfPlayer == PlayerState.OLD) {

@@ -1127,6 +1127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2eacea486774ac4f92167d3ed8bde79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tries: 5
   triesRemainingText: {fileID: 215738247}
   timerText: {fileID: 1877495612}
   hourGlassSldr: {fileID: 79968590}
