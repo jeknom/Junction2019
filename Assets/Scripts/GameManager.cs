@@ -101,7 +101,7 @@ public class GameManager :GenericSingletonClass<GameManager> {
 #endif
 
 #if UNITY_EDITOR
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) && this.triesRemaining > 0)
         {
             this.stateOfPlayer = this.stateOfPlayer == PlayerState.OLD
                 ? PlayerState.YOUNG
@@ -129,11 +129,11 @@ public class GameManager :GenericSingletonClass<GameManager> {
 
     void SetPlayerAgeWithOrientation(ScreenOrientation deviceOrientation)
     {
-        if (deviceOrientation == this.youngOrientation)
+        if (deviceOrientation == this.youngOrientation && triesRemaining > 0)
         {
             this.stateOfPlayer = PlayerState.YOUNG;
         }
-        else if (deviceOrientation == this.oldOrientation)
+        else if (deviceOrientation == this.oldOrientation && triesRemaining > 0)
         {
             this.stateOfPlayer = PlayerState.OLD;
 
