@@ -71,6 +71,8 @@ public class GameManager :GenericSingletonClass<GameManager> {
             this.mainSceneManager = value;
         }
     }
+
+
     public void reset()
     {
         //timeLimit = 10f;
