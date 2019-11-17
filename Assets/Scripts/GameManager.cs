@@ -81,6 +81,14 @@ public class GameManager :GenericSingletonClass<GameManager> {
         this.stateOfPlayer = PlayerState.OLD;
         timerStarted = false;
         triesRemaining = 3;
+
+        var currentOrientation = Screen.orientation;
+
+        this.oldOrientation = currentOrientation;
+        this.youngOrientation =
+            currentOrientation == ScreenOrientation.LandscapeLeft
+                ? ScreenOrientation.LandscapeRight
+                : ScreenOrientation.LandscapeLeft;
     }
 
     public void reset(float tl, int tr) {
@@ -90,6 +98,14 @@ public class GameManager :GenericSingletonClass<GameManager> {
         this.stateOfPlayer = PlayerState.OLD;
         timerStarted = false;
         triesRemaining = tr;
+
+        var currentOrientation = Screen.orientation;
+
+        this.oldOrientation = currentOrientation;
+        this.youngOrientation =
+            currentOrientation == ScreenOrientation.LandscapeLeft
+                ? ScreenOrientation.LandscapeRight
+                : ScreenOrientation.LandscapeLeft;
     }
 
     private void Start()
@@ -188,6 +204,13 @@ public class GameManager :GenericSingletonClass<GameManager> {
     // Generic scene management
     public void GoToScene(string name) {
         SceneManager.LoadScene(name);
-        GameManager.Instance.reset();
+        if (name == "GameOver")
+        {
+            GameManager.Instance.reset(10f, 3);
+        }
+        else
+        {
+            GameManager.Instance.reset();
+        }
     }
 }
