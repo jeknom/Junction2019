@@ -51,7 +51,16 @@ public class GameManager :GenericSingletonClass<GameManager> {
 
     public float prevTimeRemaining { get; set; }
 
-    public float timeLimit = 50f;
+
+    private float timeLimit = 10f;
+    public float TimeLimit {
+        get {
+            return this.timeLimit;
+        }
+        set {
+            this.timeLimit = value;
+        }
+    }
 
     private MainSceneManager mainSceneManager;
     public MainSceneManager varMainSceneManager {
@@ -64,11 +73,21 @@ public class GameManager :GenericSingletonClass<GameManager> {
     }
     public void reset()
     {
+        //timeLimit = 10f;
         prevTimeRemaining = 0;
         timeRemaining = timeLimit;
         this.stateOfPlayer = PlayerState.OLD;
         timerStarted = false;
         triesRemaining = 3;
+    }
+
+    public void reset(float tl, int tr) {
+        timeLimit = tl;
+        prevTimeRemaining = 0;
+        timeRemaining = timeLimit;
+        this.stateOfPlayer = PlayerState.OLD;
+        timerStarted = false;
+        triesRemaining = tr;
     }
 
     private void Start()
@@ -167,5 +186,6 @@ public class GameManager :GenericSingletonClass<GameManager> {
     // Generic scene management
     public void GoToScene(string name) {
         SceneManager.LoadScene(name);
+        GameManager.Instance.reset();
     }
 }
