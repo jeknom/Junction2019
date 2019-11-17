@@ -19,8 +19,8 @@ public class MainSceneManager : MonoBehaviour {
 
     void Start()
     {
-        //GameManager.Instance.triesRemaining = this.tries;
-        //GameManager.Instance.TimeRemaining = this.time;
+        GameManager.Instance.triesRemaining = this.tries;
+        GameManager.Instance.TimeRemaining = this.time;
         canStart = true;
         this.previousState = GameManager.Instance.StateOfPlayer;
     }
