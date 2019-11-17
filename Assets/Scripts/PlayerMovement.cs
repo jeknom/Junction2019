@@ -14,6 +14,11 @@ public class PlayerMovement : MonoBehaviour
         this.rigidbody2d = this.GetComponent<Rigidbody2D>();
         this.animator = this.GetComponent<Animator>();
         this.previousState = GameManager.Instance.StateOfPlayer;
+
+        var trigger = previousState == PlayerState.OLD
+                ? "triggerOld"
+                : "triggerYoung";
+        this.animator.SetTrigger(trigger);
     }
 
     void Update()
