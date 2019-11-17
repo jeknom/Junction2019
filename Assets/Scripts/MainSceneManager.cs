@@ -38,14 +38,14 @@ public class MainSceneManager : MonoBehaviour {
         if (currentState != previousState)
         {
             this.hourglassBackground
-                .DORotate(new Vector3(0f, 0f, 360f), 1f, RotateMode.FastBeyond360)
+                .DORotate(new Vector3(0f, 0f, 180f), 0.4f, RotateMode.FastBeyond360)
                 .SetRelative();
 
             this.previousState = currentState;
         }
 
         this.triesRemainingText.text =
-            "Rotates remaining: " + GameManager.Instance.triesRemaining.ToString();
+            "Age_Switches : " + GameManager.Instance.triesRemaining.ToString();
 
         if (canStart) {
             if(GameManager.Instance.TimerStarted && GameManager.Instance.TimeRemaining > 0) {
